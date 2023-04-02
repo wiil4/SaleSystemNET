@@ -4,15 +4,17 @@ using Microsoft.EntityFrameworkCore;
 using WSSale.Models;
 using WSSale.Models.Response;
 using WSSale.Models.Request;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WSSale.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientController : ControllerBase
     {
         private readonly RealSaleContext _context;
-        private readonly IWebHostEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;  //Documents Upload and Download
 
         public ClientController(RealSaleContext context, IWebHostEnvironment environment)
         {

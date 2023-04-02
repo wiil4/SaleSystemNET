@@ -20,14 +20,14 @@ namespace WSSale.Models
         public virtual DbSet<Concept> Concepts { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<Sale> Sales { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
 
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //optionsBuilder.UseSqlServer("server=localhost;database=RealSale;Trusted_Connection=True;");
-                optionsBuilder.UseSqlServer();
+                optionsBuilder.UseSqlServer("Server=localhost;Database=RealSale;Trusted_Connection=True;");
             }
         }*/
 
@@ -118,6 +118,28 @@ namespace WSSale.Models
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.IdClient)
                     .HasConstraintName("FK_sale_client");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("user");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
             });
 
             OnModelCreatingPartial(modelBuilder);
